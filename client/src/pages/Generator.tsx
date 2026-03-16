@@ -40,7 +40,6 @@ const Generator = () => {
           heading="Create In-Context Image"
           description="Upload your model and products images to generate stunning UGC short-form videos and social media posts"
         />
-
         <div className="flex gap-20 max-sm:flex-col items-start justify-between">
           <div className="flex flex-col w-full sm:max-w-60 gap-8 mt-12 mb-12">
             <UploadZone
