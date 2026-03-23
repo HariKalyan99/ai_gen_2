@@ -11,12 +11,18 @@ import Community from "./pages/Community";
 import Loading from "./pages/Loading";
 import Plans from "./pages/Plans";
 
+import { Toaster } from "react-hot-toast";
+
 function App() {
   return (
     <>
+      <Toaster
+        toastOptions={{ style: { background: "#333", color: "#fff" } }}
+      />
       <SoftBackdrop />
       <LenisScroll />
       <Navbar />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/generate" element={<Generator />} />

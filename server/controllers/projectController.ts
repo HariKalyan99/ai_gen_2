@@ -121,8 +121,8 @@ export const createProject = async (req: Request, res: Response) => {
 
     // image to base64 structure for ai model
 
-    const image1base64 = loadImage(images[0].path, images[0].mimeType);
-    const image2base64 = loadImage(images[0].path, images[0].mimeType);
+    const image1base64 = loadImage(images[0].path, images[0].mimetype);
+    const image2base64 = loadImage(images[1].path, images[1].mimetype);
 
     const prompt = {
       text: `Combine the person and product into a realistic photo make the person naturally hold or use the product. Match lighting, shadows, scale and perspective. Make the person stand in professional studio lighting. Output ecommerce-quality realistic imagery ${userPrompt}`,

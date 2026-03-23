@@ -8,8 +8,16 @@ import {
   Wand2Icon,
 } from "lucide-react";
 import { PrimaryButton } from "../components/Buttons";
+import { useAuth, useUser } from "@clerk/react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import api from "../configs/axios";
 
 const Generator = () => {
+  const { user } = useUser();
+  const { getToken } = useAuth();
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [productName, setProductName] = useState("");
   const [productDescription, setDescription] = useState("");
@@ -29,8 +37,41 @@ const Generator = () => {
     }
   };
 
-  const handleGenerate = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    console.log("create");
+    if (!user) return toast("Please log in to generate");
+    if (!productImage || !productName || !modelImage || !name || !aspectRatio)
+      return toast("Please fill all the required fields");
+
+    try {
+      setIsGenerating(true);
+      const formData = new FormData();
+
+      formData.append("name", name);
+      formData.append("productName", productName);
+      formData.append("productDescription", productDescription);
+      formData.append("userPrompt", userPrompt);
+      formData.append("aspectRatio", aspectRatio);
+      formData.append("productImage", productImage);
+      formData.append("modelImage", modelImage);
+
+      const token = await getToken();
+
+      const { data } = await api.post("/api/project/create", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      toast.success(data.message);
+      navigate("/result/" + data.projectId);
+    } catch (error: any) {
+      setIsGenerating(false);
+      toast.error(error?.response?.data?.message || error.message);
+      console.log(error);
+    }
   };
 
   return (
@@ -145,9 +186,9 @@ const Generator = () => {
 
         <div className="flex justify-center mt-10">
           <PrimaryButton
+            type="submit"
             disabled={isGenerating}
             className="px-10 py-3 rounded-md disabled:opacity-70 disabled:cursor-not-allowed"
-            onClick={() => setIsGenerating(true)}
           >
             {isGenerating ? (
               <>

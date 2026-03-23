@@ -12,7 +12,10 @@ const projectRouter = express.Router();
 
 projectRouter.post(
   "/create",
-  upload.array("images", 2),
+  upload.fields([
+    { name: "productImage", maxCount: 1 },
+    { name: "modelImage", maxCount: 1 },
+  ]),
   protect,
   createProject,
 );

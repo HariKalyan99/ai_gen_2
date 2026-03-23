@@ -8,6 +8,7 @@ import clerkWebhooks from "./controllers/clerk.js";
 import * as Sentry from "@sentry/node";
 import userRouter from "./routes/userRoutes.js";
 import projectRouter from "./routes/projectRouter.js";
+import logger from "./configs/logger.js";
 
 // Middleware
 app.use(cors());
@@ -38,5 +39,5 @@ app.use("/api/project", projectRouter);
 Sentry.setupExpressErrorHandler(app);
 
 app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+  logger.info(`Server is running at http://localhost:${port}`);
 });
