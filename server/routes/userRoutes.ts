@@ -11,7 +11,7 @@ const userRouter = express.Router();
 
 userRouter.get("/credits", protect, getUserCredits);
 userRouter.get("/projects", protect, getAllProjects);
-userRouter.get("/projects/:id", protect, getProjectById);
+userRouter.get("/projects/:projectId", protect, getProjectById);
 userRouter.get("/publish/:projectId", protect, toggleProjectPublic);
 
 export default userRouter;

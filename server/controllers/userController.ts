@@ -53,7 +53,8 @@ export const getAllProjects = async (req: Request, res: Response) => {
 
 export const getProjectById = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.auth();
+    const user = req.auth();
+    const {userId} = user
     const { projectId } = req.params;
 
     if (!userId) res.status(401).json({ message: "Unauthorized" });

@@ -12,15 +12,12 @@ const projectRouter = express.Router();
 
 projectRouter.post(
   "/create",
-  upload.fields([
-    { name: "productImage", maxCount: 1 },
-    { name: "modelImage", maxCount: 1 },
-  ]),
+ upload.array("images", 2),
   protect,
   createProject,
 );
-projectRouter.post("/video", protect, createVideo);
 projectRouter.get("/published", getAllPublishedProjects);
+projectRouter.post("/video", protect, createVideo);
 projectRouter.delete("/:projectId", deleteProject);
 
 export default projectRouter;
