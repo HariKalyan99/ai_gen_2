@@ -47,7 +47,7 @@ export const createProject = async (req: Request, res: Response) => {
     },
   });
 
-  if ((!user || user.credits, 5))
+  if ((!user || user.credits < 5))
     res.status(401).json({ message: "Insufficient credits" });
   else
     await prisma.user
@@ -154,8 +154,7 @@ export const createProject = async (req: Request, res: Response) => {
       throw new Error("Failed to generate image");
     }
 
-    const base64Image = `data: image/png;base64, ${finalBuffer.toString("base64")}`;
-
+    const base64Image = `data:image/png;base64,${finalBuffer.toString("base64")}`;
     const uploadResult = await cloudinary.uploader.upload(base64Image, {
       resource_type: "image",
     });
@@ -228,9 +227,9 @@ export const createVideo = async (req: Request, res: Response) => {
   try {
     const project = await prisma.project.findUnique({
       where: {
-        id: { projectId, userId },
-        include: { user: true },
+        id: projectId, userId ,
       },
+      include: { user: true },
     });
 
     if (!project || project.isGenerating) {
@@ -292,12 +291,12 @@ export const createVideo = async (req: Request, res: Response) => {
 
     fs.mkdirSync("videos", { recursive: true });
 
-    if (!operation.response.generatedVideo) {
+    if (!operation.response.generatedVideos) {
       throw new Error(operation.response.raiMediaFilteredReasons[0]);
     }
 
     await ai.files.download({
-      file: operation.response.generatedVideo[0].video,
+      file: operation.response.generatedVideos[0].video,
       downloadPath: filePath,
     });
 

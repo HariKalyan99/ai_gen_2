@@ -25,7 +25,7 @@ const Result = () => {
 
   const fetchProjectData = async () => {
     try {
-      const token = getToken();
+      const token = await getToken();
       const { data } = await api.get(`/api/user/projects/${projectId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -43,7 +43,7 @@ const Result = () => {
     setIsGenerating(true);
 
     try {
-      const token = getToken();
+      const token = await getToken();
       const { data } = await api.post(
         `/api/project/video`,
         { projectId },

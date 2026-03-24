@@ -40,7 +40,6 @@ const Generator = () => {
   const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log("create");
     if (!user) return toast("Please log in to generate");
     if (!productImage || !productName || !modelImage || !name || !aspectRatio)
       return toast("Please fill all the required fields");
@@ -54,8 +53,8 @@ const Generator = () => {
       formData.append("productDescription", productDescription);
       formData.append("userPrompt", userPrompt);
       formData.append("aspectRatio", aspectRatio);
-      formData.append("productImage", productImage);
-      formData.append("modelImage", modelImage);
+      formData.append("images", productImage);
+      formData.append("images", modelImage);
 
       const token = await getToken();
 

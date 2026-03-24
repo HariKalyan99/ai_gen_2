@@ -8,7 +8,6 @@ export const protect = async (
 ) => {
   try {
     const { userId } = req.auth();
-
     if (!userId) {
       return res.status(401).json({ message: "Unauthorized" });
     }
@@ -19,3 +18,5 @@ export const protect = async (
     res.status(500).json({ message: error.code || error.message });
   }
 };
+
+
